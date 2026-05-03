@@ -48,3 +48,12 @@ async def update_book(updated_book=Body()):
             book.update(updated_book)
             return book
     return None
+
+
+@app.delete("/books/delete_book/{title}")
+async def delete_book(title: str):
+    for book in BOOKS:
+        if book['title'].casefold() == title.casefold():
+            BOOKS.remove(book)
+            return book
+    return None
