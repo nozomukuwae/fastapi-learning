@@ -30,6 +30,11 @@ async def read_category_by_query(category: str):
     return [book for book in BOOKS if book['category'].casefold() == category.casefold()]
 
 
+@app.get("/books/by_author/")
+async def read_author_by_query(author: str):
+    return [book for book in BOOKS if book['author'].casefold() == author.casefold()]
+
+
 @app.get("/books/{author}/")
 async def read_author_category_by_query(author: str, category: str):
     return [book for book in BOOKS if
