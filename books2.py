@@ -84,3 +84,10 @@ async def update_book(book_request: BookRequest):
     for index, book in enumerate(BOOKS):
         if book.id == book_request.id:
             BOOKS[index] = Book(**book_request.model_dump())
+
+
+@app.delete("/books/{book_id}")
+async def delete_book(book_id: int):
+    for book in BOOKS:
+        if book.id == book_id:
+            BOOKS.remove(book)
