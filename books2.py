@@ -77,3 +77,10 @@ async def create_book(book_request: BookRequest):
 def find_book_id(book: Book):
     book.id = 1 if len(BOOKS) <= 0 else BOOKS[-1].id + 1
     return book
+
+
+@app.put("/books/update_book")
+async def update_book(book_request: BookRequest):
+    for index, book in enumerate(BOOKS):
+        if book.id == book_request.id:
+            BOOKS[index] = Book(**book_request.model_dump())
