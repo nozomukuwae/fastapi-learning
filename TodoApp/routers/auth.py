@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
+from fastapi.security import OAuth2PasswordRequestForm
 from pydantic import BaseModel
 from typing import Annotated
 from sqlalchemy.orm import Session
@@ -30,6 +31,13 @@ class CreateUserRequest(BaseModel):
     role: str
 
 
+def authenticate_user(username: str, password: str, db: db_dependency):
+    user = db.query(Users).filter(Users.username == username).first()
+    if not user:
+        return False
+    return bcrypt.checkpw(password.encode('utf-8'), user.hashed_password.encode('utf-8'))
+
+
 @router.post("/auth", status_code=status.HTTP_201_CREATED)
 async def create_user(db: db_dependency, create_user_request: CreateUserRequest):
     user = Users(
@@ -46,3 +54,12 @@ async def create_user(db: db_dependency, create_user_request: CreateUserRequest)
     )
     db.add(user)
     db.commit()
+
+
+@router.post("/token", status_code=status.HTTP_200_OK)
+async def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
+                                 db: db_dependency):
+    is_authenticated = authenticate_user(form_data.username, form_data.password, db)
+    if not is_authenticated:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Failed Authentication!')
+    return 'Successful Authentication!'
