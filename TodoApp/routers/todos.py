@@ -19,8 +19,8 @@ def get_db():
         db.close()
 
 
-db_dependency = Annotated[Session, Depends(get_db)]
 user_dependency = Annotated[dict, Depends(get_current_user)]
+db_dependency = Annotated[Session, Depends(get_db)]
 
 
 class TodoRequest(BaseModel):
