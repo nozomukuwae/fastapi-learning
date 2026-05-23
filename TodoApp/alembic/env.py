@@ -4,8 +4,14 @@ from sqlalchemy import pool
 
 from alembic import context
 
-import settings
-import models
+import os
+import sys
+
+# カレントディレクトリ（プロジェクトルート）を検索パスの先頭に追加
+sys.path.insert(0, os.getcwd())
+
+from TodoApp import settings
+from TodoApp import models
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

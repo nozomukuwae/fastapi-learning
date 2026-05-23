@@ -8,9 +8,9 @@ from typing import Annotated
 from sqlalchemy.orm import Session
 from jose import jwt, JWTError
 from dotenv import load_dotenv
-from database import SessionLocal
+from ..database import SessionLocal
 from starlette import status
-from models import Users
+from ..models import Users
 import bcrypt
 
 

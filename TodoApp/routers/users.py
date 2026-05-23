@@ -5,8 +5,8 @@ from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, Query, HTTPException
 from starlette import status
 import bcrypt
-from models import Users
-from database import SessionLocal
+from ..models import Users
+from ..database import SessionLocal
 from .auth import get_current_user
 
 router = APIRouter(
