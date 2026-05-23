@@ -21,6 +21,7 @@ class CreateUserRequest(BaseModel):
     last_name: str
     password: str
     role: str
+    phone_number: str
 
 
 class Token(BaseModel):
@@ -91,6 +92,7 @@ async def create_user(db: db_dependency, create_user_request: CreateUserRequest)
         ).decode('utf-8'),
         is_active=True,
         role=create_user_request.role,
+        phone_number=create_user_request.phone_number,
     )
     db.add(user)
     db.commit()
