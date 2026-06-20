@@ -1,0 +1,6 @@
+.DS_Store
+.git/
+.gitignore
+.pytest_cache/
+__pycache__/
+fastapienv/
