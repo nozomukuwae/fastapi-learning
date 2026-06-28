@@ -34,3 +34,4 @@ archive.zip
 
 # database
 *.db
+postgres_data/
